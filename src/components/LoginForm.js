@@ -15,27 +15,28 @@ const LoginForm = ({ onSwitchToSignup }) => {
   };
 
   return (
-    <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', width: '200px' }}>
+    <form onSubmit={handleLogin}>
         <h1>Login</h1>
-        <label>Username:</label>
+        <label for='username'>Username:</label>
       <input
         type="text"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         placeholder="Enter your username"
         required
-        style={{ marginBottom: '10px' }}
       />
-      <label>Password:</label>
+      <br></br>
+      <label for='password'>Password:</label>
       <input
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Enter you password"
         required
-        style={{ marginBottom: '10px' }}
       />
-      <button type="submit" style={{ marginBottom: '10px' }}>Login</button>
+      <br></br>
+      <button type="submit">Login</button>
+      <br></br>
       <button type="button" onClick={onSwitchToSignup}>Switch to Signup</button>
     </form>
   );

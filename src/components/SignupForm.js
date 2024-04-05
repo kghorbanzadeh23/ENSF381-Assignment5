@@ -21,42 +21,46 @@ const SignupForm = ({ onSwitchToLogin }) => {
   };
 
   return (
-    <form onSubmit={handleSignup} style={{ display: 'flex', flexDirection: 'column', width: '200px' }}>
+    <form onSubmit={handleSignup} >
       <h1>Signup</h1>
-      
+      <label for='username'>Username:</label>
       <input
         type="text"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
-        placeholder="Username"
+        placeholder="Enter your username"
         required
-        style={{ marginBottom: '10px' }}
       />
+      <br></br>
+      <label for='password'>Password:</label>
       <input
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
+        placeholder="Enter your password"
         required
-        style={{ marginBottom: '10px' }}
       />
+      <br></br>
+      <label for='confirmpassword'>Confirm Password:</label>
       <input
         type="password"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
-        placeholder="Confirm Password"
+        placeholder="Confirm your Password"
         required
-        style={{ marginBottom: '10px' }}
       />
+      <br></br>
+      <label for='email'>Email:</label>
       <input
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
+        placeholder="Enter you email"
         required
-        style={{ marginBottom: '10px' }}
       />
-      <button type="submit" style={{ marginBottom: '10px' }}>Submit</button>
+      <br></br>
+      <button type="submit">Submit</button>
+      <br></br>
       <button type="button" onClick={onSwitchToLogin}>Switch to Login</button>
     </form>
   );
