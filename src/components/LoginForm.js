@@ -17,19 +17,21 @@ const LoginForm = ({ onSwitchToSignup }) => {
   return (
     <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', width: '200px' }}>
         <h1>Login</h1>
+        <label>Username:</label>
       <input
         type="text"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
-        placeholder="Username"
+        placeholder="Enter your username"
         required
         style={{ marginBottom: '10px' }}
       />
+      <label>Password:</label>
       <input
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
+        placeholder="Enter you password"
         required
         style={{ marginBottom: '10px' }}
       />
