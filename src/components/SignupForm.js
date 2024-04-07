@@ -18,7 +18,33 @@ const SignupForm = ({ onSwitchToLogin }) => {
     }
     // Implement signup logic here
     console.log('Signing up with:', username, email, password);
+    fetch('http://127.0.0.1:5000/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username,
+        password,
+        email,
+      }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.message) {
+        // Registration was successful
+        alert('Registration successful');
+      } else if (data.error) {
+        // Handle errors, like showing the error message to the user
+        alert('Error: ' + data.error);
+      }
+    })
+    .catch(error => {
+      // Handle network errors
+      console.error('There was an error!', error);
+    });
   };
+  
 
   return (
     <form onSubmit={handleSignup} >
@@ -63,6 +89,7 @@ const SignupForm = ({ onSwitchToLogin }) => {
       <br></br>
       <button type="button" onClick={onSwitchToLogin}>Switch to Login</button>
     </form>
+    
   );
 };
 

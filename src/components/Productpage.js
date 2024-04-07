@@ -3,23 +3,29 @@ import Header from './Header';
 import ProductList from './ProductList';
 import Cart from './Cart';
 import Footer from './Footer';
-import productsData from '../data/products';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Productpage = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
   // Load cart items from localStorage on component mount
   useEffect(() => {
-    const storedCartItems = localStorage.getItem('cartItems');
-    if (storedCartItems) {
-      console.log("Loaded cart items from localStorage:", storedCartItems);
-      console.log("Loaded cart items in JSON", JSON.parse (storedCartItems));
-      setCartItems(JSON.parse(storedCartItems));
-  
+    // Check if user is logged in
+    const isLoggedIn = checkLoginStatus();
+    if (!isLoggedIn) {
+      navigate('/login');
+    } else {
+      // Fetch products if logged in
+      fetch('http://127.0.0.1:5000/products') // Replace with your server's URL
+        .then(response => response.json())
+        .then(data => setProducts(data))
+        .catch(error => {
+          console.error('Error fetching products:', error);
+        });
     }
-  }, []); 
-
+  }, [navigate]);
   
   useEffect(() => {
     console.log("Productpage component rerendered");
@@ -63,7 +69,7 @@ const Productpage = () => {
       <table>
         <tbody>
           <tr>
-            <td><ProductList products={productsData} onAddToCart={addToCart} /></td>
+            <td><ProductList products={products} onAddToCart={addToCart} /></td>
             <td style={{ verticalAlign: 'top' }}><Cart cartItems={cartItems} onRemove={removeFromCart} /></td>
           </tr>
         </tbody>
@@ -72,5 +78,16 @@ const Productpage = () => {
     </div>
   );
 };
+
+function checkLoginStatus() {
+  // Get the user's auth token or other authentication-related information from localStorage
+  const authToken = localStorage.getItem('start');
+
+  // If there's a token, we assume the user is logged in
+  // In a real-world scenario, you might also want to verify that the token is still valid
+  const isLoggedIn = authToken !== null;
+
+  return isLoggedIn;
+}
 
 export default Productpage;

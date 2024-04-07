@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = ({ onSwitchToSignup }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -10,8 +12,29 @@ const LoginForm = ({ onSwitchToSignup }) => {
       alert('Please enter both a username and a password.');
       return;
     }
-    // Implement login logic here
-    console.log('Logging in with:', username, password);
+    fetch('http://127.0.0.1:5000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data.message === 'Login successful') {
+        navigate('/products'); // Navigate to the products page
+      } else {
+        alert('Error: ' + data.error); // Show error message if login failed
+      }
+    })
+    .catch(error => {
+      console.error('There was an error!', error);
+    });
   };
 
   return (
